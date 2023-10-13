@@ -6,6 +6,10 @@ name: Terraform Via PR Comments — Reusable Workflow
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: Github environment to use for this run
     secrets:
       env_vars:
         description: Environment variables passed into this workflow.
