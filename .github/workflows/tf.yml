@@ -9,6 +9,7 @@ on:
     inputs:
       environment:
         type: string
+        required: true
         description: Github environment to use for this run
     secrets:
       env_vars:
@@ -46,6 +47,7 @@ jobs:
     # has already been run on the PR and may be run again).
     if: startsWith(github.event.comment.body, '-terraform=') || contains(join(github.event.pull_request.labels.*.name), 'terraform:')
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     outputs:
       COMMENT_SHA: ${{ steps.get_branch.outputs.head_sha }}
       PARSED_COMMENT: ${{ steps.parse_comment.outputs.result }}
@@ -109,6 +111,7 @@ jobs:
     # environment variables passed into this workflow. E.g., for authentication.
     needs: [pre]
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     outputs:
       PROMPT_MATRIX: ${{ steps.environment_variables.outputs.PROMPT_MATRIX }}
       TF_PLAN_ID: ${{ steps.terraform_variables.outputs.TF_PLAN_ID }}
