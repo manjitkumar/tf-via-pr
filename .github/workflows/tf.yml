@@ -127,8 +127,6 @@ jobs:
       TF_CLI_ARGS: -no-color
       TF_IN_AUTOMATION: true
       TF_INPUT: false
-      AWS_ACCESS_KEY_ID=: ${{ vars.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
       - name: Checkout repository
@@ -142,6 +140,8 @@ jobs:
       - name: Populate environment variables
         id: environment_variables
         env:
+          AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           env_vars: ${{ secrets.env_vars }}
           matrix: ${{ toJSON(matrix.in) }}
         run: |
